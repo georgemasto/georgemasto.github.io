@@ -2,8 +2,6 @@
 driveId: 2PACX-1vRYunZZ3g7BonaSDUl9bvBg9eGDc9TX6QdHHBzBwf2CO5jjrW3kJSdlFL_KOLKndPQ_hacMD-LwU2ad
 ---
 
-{% include googleDoc.html id=page.driveId %}
-
 ## Welcome to GitHub Pages
 
 You can use the [editor on GitHub](https://github.com/georgemasto/georgemasto.github.io/edit/master/index.md) to maintain and preview the content for your website in Markdown files.
@@ -15,6 +13,9 @@ Whenever you commit to this repository, GitHub Pages will run [Jekyll](https://j
 Markdown is a lightweight and easy-to-use syntax for styling your writing. It includes conventions for
 
 ```markdown
+
+{% include googleDoc.html id=page.driveId %}
+
 Syntax highlighted code block
 
 # Header 1
