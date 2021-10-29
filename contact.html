@@ -68,7 +68,7 @@
 
   <nav class="navbar navbar-light custom-navbar">
     <div class="container">
-      <a class="navbar-brand" href="index.html">MyPortfolio.</a>
+      <a class="navbar-brand" href="index.html">George M. Mastorakos</a>
 
       <a href="#" class="burger" data-bs-toggle="collapse" data-bs-target="#main-navbar">
         <span></span>
@@ -94,28 +94,34 @@
         <div class="row">
           <div class="col-md-6 mb-5 mb-md-0" data-aos="fade-up">
 
-            <form action="forms/contact.php" method="post" role="form" class="php-email-form">
+            <form action="forms/contact.php" method="POST" role="form" class="php-email-form">
 
               <div class="row">
                 <div class="col-md-6 form-group">
-                  <label for="name">Name</label>
-                  <input type="text" name="name" class="form-control" id="name" data-rule="minlen:4" data-msg="Please enter at least 4 chars" />
-                  <div class="validate"></div>
+                  <label for="form_name">Name</label>
+                  <input type="text" name="form_name" class="form-control" id="form_name" data-rule="minlen:4" data-msg="Please enter at least 4 chars" />
+                  <div class="error">
+                    <?php echo $nameErr;?>
+                  </div>
                 </div>
                 <div class="col-md-6 form-group mt-3">
-                  <label for="name">Email</label>
-                  <input type="email" class="form-control" name="email" id="email" data-rule="email" data-msg="Please enter a valid email" />
+                  <label for="form_email">Email</label>
+                  <input type="email" class="form-control" name="form_email" id="form_email" data-rule="email" data-msg="Please enter a valid email" />
+                  <div class="error">
+                    <?php echo $emailErr;?>
+                  </div>
+                </div>
+                <div class="col-md-12 form-group mt-3">
+                  <label for="form_subject">Subject</label>
+                  <input type="text" class="form-control" name="form_subject" id="form_subject" data-rule="minlen:4" data-msg="Please enter at least 8 chars of subject" />
                   <div class="validate"></div>
                 </div>
                 <div class="col-md-12 form-group mt-3">
-                  <label for="name">Subject</label>
-                  <input type="text" class="form-control" name="subject" id="subject" data-rule="minlen:4" data-msg="Please enter at least 8 chars of subject" />
-                  <div class="validate"></div>
-                </div>
-                <div class="col-md-12 form-group mt-3">
-                  <label for="name">Message</label>
-                  <textarea class="form-control" name="message" cols="30" rows="10" data-rule="required" data-msg="Please write something for us"></textarea>
-                  <div class="validate"></div>
+                  <label for="form_message">Message</label>
+                  <textarea class="form-control" name="form_message" id='form_message' cols="30" rows="10" data-rule="required" data-msg="Please write something for us"></textarea>
+                  <div class="error">
+                    <?php echo $messageErr;?>
+                  </div>
                 </div>
 
                 <div class="col-md-12 mb-3">
