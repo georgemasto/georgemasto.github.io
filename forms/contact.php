@@ -69,7 +69,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
 
 // Sending email
 		if(mail($to, $subject, $message, $headers)){
-			header("Location:thank-you.php");
+			header("Message sent.");
 		} else{
 			echo '<p class="error">Unable to send email. Please try again.</p>';
 		}
