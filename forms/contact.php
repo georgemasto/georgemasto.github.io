@@ -48,7 +48,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
 	if(empty($nameErr) && empty($emailErr) && empty($messageErr)){
 		$to = 'georgemasto@gmail.com'; // Change to where you want the form data to be sent
 		$subject = $_POST['subject'];
-		$from = 'hello@georgemasto.github.io';  // Must be from your domain
+		$from = 'noreply@georgemasto.github.io';  // Must be from your domain
 
 // To send HTML mail, the Content-type header must be set
 		$headers  = 'MIME-Version: 1.0' . "\r\n";
