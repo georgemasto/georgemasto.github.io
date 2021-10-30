@@ -1,111 +1,41 @@
 <?php
-$date = date("m-d-Y");
-// Define variables and initialize with empty values
-$nameErr = $emailErr = $messageErr = "";
-$name = $email = $subject = $message = "";
+  /**
+  * Requires the "PHP Email Form" library
+  * The "PHP Email Form" library is available only in the pro version of the template
+  * The library should be uploaded to: vendor/php-email-form/php-email-form.php
+  * For more info and help: https://bootstrapmade.com/php-email-form/
+  */
 
-// Processing form data when form is submitted
-if($_SERVER["REQUEST_METHOD"] == "POST"){
+  // Replace contact@example.com with your real receiving email address
+  $receiving_email_address = 'georgemasto@gmail.com';
 
-	// Validate user name
-	if(empty($_POST['name'])){
-		$nameErr = "Please enter your name.";
-	} else{
-		$name = filterName($_POST['name']);
-		if($name == FALSE){
-			$nameErr = "Please enter a valid name.";
-		}
-	}
+  if( file_exists($php_email_form = '../assets/vendor/php-email-form/php-email-form.php' )) {
+    include( $php_email_form );
+  } else {
+    die( 'Unable to load the "PHP Email Form" Library!');
+  }
 
-	// Validate email address
-	if(empty($_POST["email"])){
-		$emailErr = "Please enter your email address.";
-	} else{
-		$email = filterEmail($_POST["email"]);
-		if($email == FALSE){
-			$emailErr = "Please enter a valid email address.";
-		}
-	}
+  $contact = new PHP_Email_Form;
+  $contact->ajax = true;
+  
+  $contact->to = $receiving_email_address;
+  $contact->from_name = $_POST['name'];
+  $contact->from_email = $_POST['email'];
+  $contact->subject = $_POST['subject'];
 
-	// Validate message subject
-	if(empty($_POST["subject"])){
-		$form_subject = "";
-	} else{
-		$form_subject = filterString($_POST["subject"]);
-	}
+  // Uncomment below code if you want to use SMTP to send emails. You need to enter your correct SMTP credentials
+  /*
+  $contact->smtp = array(
+    'host' => 'example.com',
+    'username' => 'example',
+    'password' => 'pass',
+    'port' => '587'
+  );
+  */
 
-	// Validate user message
-	if(empty($_POST["message"])){
-		$messageErr = "Please enter your message.";
-	} else{
-		$comment = filterString($_POST["message"]);
-		if($comment == FALSE){
-			$messageErr = "Please enter a valid message.";
-		}
-	}
+  $contact->add_message( $_POST['name'], 'From');
+  $contact->add_message( $_POST['email'], 'Email');
+  $contact->add_message( $_POST['message'], 'Message', 10);
 
-	// Check input errors before sending email
-	if(empty($nameErr) && empty($emailErr) && empty($messageErr)){
-		$to = 'georgemasto@gmail.com'; // Change to where you want the form data to be sent
-		$subject = $_POST['subject'];
-		$from = 'noreply@georgemasto.github.io';  // Must be from your domain
-
-// To send HTML mail, the Content-type header must be set
-		$headers  = 'MIME-Version: 1.0' . "\r\n";
-		$headers .= 'Content-type: text/html; charset=iso-8859-1' . "\r\n";
-
-// Create email headers
-		$headers .= 'From: '.$from."\r\n".
-			'Reply-To: '.$from."\r\n" .
-			'X-Mailer: PHP/' . phpversion();
-
-// Compose a simple HTML email message
-		$message .= '<h1>New Contact Form Submission</h1><br><br><br>';
-		$message .= "<h3>Date:</h3> $date<br><br>";
-		$message .= "<h3>Name:</h3> $name<br><br>";
-		$message .= "<h3>Email:</h3> $email<br><br>";
-		$message .= "<h3>Subject:</h3> $form_subject<br><br>";
-		$message .= "<h3>Message:</h3> $comment";
-
-// Sending email
-		if(mail($to, $subject, $message, $headers)){
-			header("Message sent.");
-		} else{
-			echo '<p class="error">Unable to send email. Please try again.</p>';
-		}
-	}
-}
-
-// Functions to filter user inputs
-function filterName($field){
-	// Sanitize user name
-	$field = filter_var(trim($field), FILTER_SANITIZE_STRING);
-
-	// Validate user name
-	if(filter_var($field, FILTER_VALIDATE_REGEXP, array("options"=>array("regexp"=>"/^[a-zA-Z\s]+$/")))){
-		return $field;
-	} else{
-		return FALSE;
-	}
-}
-function filterEmail($field){
-	// Sanitize e-mail address
-	$field = filter_var(trim($field), FILTER_SANITIZE_EMAIL);
-
-	// Validate e-mail address
-	if(filter_var($field, FILTER_VALIDATE_EMAIL)){
-		return $field;
-	} else{
-		return FALSE;
-	}
-}
-function filterString($field){
-	// Sanitize string
-	$field = filter_var(trim($field), FILTER_SANITIZE_STRING);
-	if(!empty($field)){
-		return $field;
-	} else{
-		return FALSE;
-	}
-}
+  echo $contact->send();
 ?>
